@@ -1,0 +1,27 @@
+# permissions for end users to view hugoes.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: hugo-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: hugo-operator
+    app.kubernetes.io/part-of: hugo-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: hugo-viewer-role
+rules:
+- apiGroups:
+  - hugo.gohugo.io
+  resources:
+  - hugoes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - hugo.gohugo.io
+  resources:
+  - hugoes/status
+  verbs:
+  - get

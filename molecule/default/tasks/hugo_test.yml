@@ -1,0 +1,18 @@
+---
+- name: Create the hugo.gohugo.io/v1alpha1.Hugo
+  k8s:
+    state: present
+    namespace: '{{ namespace }}'
+    definition: "{{ lookup('template', '/'.join([samples_dir, cr_file])) | from_yaml }}"
+    wait: yes
+    wait_timeout: 300
+    wait_condition:
+      type: Successful
+      status: "True"
+  vars:
+    cr_file: 'hugo_v1alpha1_hugo.yaml'
+
+- name: Add assertions here
+  assert:
+    that: false
+    fail_msg: FIXME Add real assertions for your operator

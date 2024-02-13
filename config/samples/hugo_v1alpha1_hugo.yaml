@@ -1,0 +1,12 @@
+apiVersion: hugo.gohugo.io/v1alpha1
+kind: Hugo
+metadata:
+  labels:
+    app.kubernetes.io/name: hugo
+    app.kubernetes.io/instance: hugo-sample
+    app.kubernetes.io/part-of: hugo-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: hugo-operator
+  name: hugo-sample
+spec:
+  # TODO(user): Add fields here
