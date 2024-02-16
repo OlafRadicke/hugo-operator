@@ -3,23 +3,47 @@
 - name: start hugo
   kubernetes.core.k8s:
     definition:
-      kind: Deployment
-      apiVersion: apps/v1
+      kind:                       Deployment
+      apiVersion:                 apps/v1
       metadata:
-        name: '{{ ansible_operator_meta.name }}-nginx'
-        namespace: '{{ ansible_operator_meta.namespace }}'
+        name:                     '{{ ansible_operator_meta.name }}-nginx'
+        namespace:                '{{ ansible_operator_meta.namespace }}'
       spec:
-        replicas: "{{ replicas_size }}"
+        replicas:                 "{{ replicas_size }}"
         selector:
           matchLabels:
-            app: hugo
+            app:                  hugo
         template:
           metadata:
             labels:
-              app: hugo
+              app:                hugo
           spec:
+            initContainers:
+              - name:             '{{ ansible_operator_meta.name }}-init-container'
+                image:            docker.io/olafradicke/hugo:0.0.1
+                command:
+                  -               '/init_cript.sh'
             containers:
-            - name: nginx
-              image: "docker.io/nginxinc/nginx-unprivileged"
+            - name:               nginx
+              image:              "docker.io/nginxinc/nginx-unprivileged"
               ports:
-                - containerPort: 8080
+                - name:           web-ui
+                  containerPort:  8080
+
+
+- name: start hugo service
+  kubernetes.core.k8s:
+    definition:
+      apiVersion:                 v1
+      kind:                       Service
+      metadata:
+        name:                     '{{ ansible_operator_meta.name }}'
+        namespace:                '{{ ansible_operator_meta.namespace }}'
+      spec:
+        selector:
+          app.kubernetes.io/name: '{{ ansible_operator_meta.name }}-nginx'
+        ports:
+          - protocol:             TCP
+            port:                 80
+            targetPort:           web-ui
+            type:                 ClusterIP
