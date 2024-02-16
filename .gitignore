@@ -13,5 +13,5 @@ bin
 *.swo
 *~
 
-dist-deploy.yaml
-dist-install.yaml
+hugo-dist-install.yaml
+hugo-dist-deploy.yaml
