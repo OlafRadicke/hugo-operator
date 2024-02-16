@@ -30,6 +30,7 @@ BUNDLE_METADATA_OPTS ?= $(BUNDLE_CHANNELS) $(BUNDLE_DEFAULT_CHANNEL)
 # For example, running 'make bundle-build bundle-push catalog-build catalog-push' will build and push both
 # gohugo.io/hugo-operator-bundle:$VERSION and gohugo.io/hugo-operator-catalog:$VERSION.
 IMAGE_TAG_BASE ?= docker.io/olafradicke/hugo-operator
+docker.io/olafradicke/hugo-operator:0.0.1
 
 # BUNDLE_IMG defines the image:tag used for the bundle.
 # You can use it as an arg. (E.g make bundle-build BUNDLE_IMG=<some-registry>/<project-name-bundle>:<tag>)
@@ -122,7 +123,7 @@ install: kustomize ## Install CRDs into the K8s cluster specified in ~/.kube/con
 
 .PHONY: dist-install
 dist-install: kustomize ## Install CRDs into the K8s cluster specified in ~/.kube/config.
-	$(KUSTOMIZE) build config/crd > ./dist-install.yaml
+	$(KUSTOMIZE) build config/crd > ./hugo-dist-install.yaml
 
 .PHONY: uninstall
 uninstall: kustomize ## Uninstall CRDs from the K8s cluster specified in ~/.kube/config.
@@ -131,7 +132,7 @@ uninstall: kustomize ## Uninstall CRDs from the K8s cluster specified in ~/.kube
 .PHONY: dist-deploy
 dist-deploy: kustomize ## Deploy controller to the K8s cluster specified in ~/.kube/config.
 	cd config/manager && $(KUSTOMIZE) edit set image controller=${IMG}
-	$(KUSTOMIZE) build config/default > ./dist-deploy.yaml
+	$(KUSTOMIZE) build config/default > ./hugo-dist-deploy.yaml
 
 .PHONY: deploy
 deploy: kustomize ## Deploy controller to the K8s cluster specified in ~/.kube/config.
