@@ -1,15 +1,18 @@
 FROM alpine:3.19
 RUN apk add \
     --no-cache \
-	curl
+	  curl \
+    bash \
+    tar \
+    gzip
 RUN apk add \
 	--update \
     --no-cache \
 	--repository=https://dl-cdn.alpinelinux.org/alpine/edge/community \
 	hugo
 
-COPY init_cript.sh      /init_cript.sh
-RUN chmod u+x,g+x,o+x /init_cript.sh
+COPY init_script.sh     /init_script.sh
+RUN chmod u+x,g+x,o+x /init_script.sh
 RUN adduser \
   -g hugo \
   --disabled-password \

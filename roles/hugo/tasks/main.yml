@@ -22,7 +22,7 @@
               - name:             '{{ ansible_operator_meta.name }}-init-container'
                 image:            docker.io/olafradicke/hugo:0.0.1
                 command:
-                  -               '/init_cript.sh'
+                  -               '/init_script.sh'
             containers:
             - name:               nginx
               image:              "docker.io/nginxinc/nginx-unprivileged"
