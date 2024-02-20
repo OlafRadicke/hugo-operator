@@ -19,16 +19,36 @@
               app:                hugo
           spec:
             initContainers:
-              - name:             '{{ ansible_operator_meta.name }}-init-container'
-                image:            docker.io/olafradicke/hugo:0.0.1
-                command:
-                  -               '/init_script.sh'
+            - name:               '{{ ansible_operator_meta.name }}-init-container'
+              image:              docker.io/olafradicke/hugo:0.0.3
+              env:
+              - name:             ARCHIVE_URL
+                value:            "{{ archive.url }}"
+              - name:             ARCHIVE_FORMAT
+                value:            "{{ archive.format }}"
+              - name:             ARCHIVE_DIR
+                value:            "{{ archive.url }}"
+              - name:             ARCHIVE_HUGO_DIR
+                value:            "{{ archive.hugo_url }}"
+              - name:             HUGO_BASE_URL=
+                value:            "https://olaf-radicke.de"
+              - name:             TARGET_DIR=
+                value:            "{{ static_html_dir }}"
+              volumeMounts:
+              - name:             static_html
+                mountPath:        "{{ static_html_dir }}"
             containers:
             - name:               nginx
               image:              "docker.io/nginxinc/nginx-unprivileged"
               ports:
                 - name:           web-ui
                   containerPort:  8080
+              volumeMounts:
+              - name:             static_html
+                mountPath:        "{{ static_html_dir }}"
+            volumes:
+            - name:               static_html
+              emptyDir:           {}
 
 
 - name: start hugo service

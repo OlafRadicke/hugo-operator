@@ -1,3 +1,4 @@
 ---
 
 # replicas_size: 1
+static_html_dir: "/usr/share/nginx/html"

@@ -4,16 +4,20 @@ set -x
 set -u
 set -e
 
-
-GIT_URL="https://github.com/OlafRadicke/the-independent-friend-static/archive/refs/tags"
-GIT_TAG="4.6.2"
-GIT_FORMAT="tar.gz"
-GIT_PATH="the-independent-friend-static-${GIT_TAG}"
-
 cd /hugo
-curl -L ${GIT_URL}/${GIT_TAG}.${GIT_FORMAT} -o ${GIT_PATH}.${GIT_FORMAT}
-tar -xvzf ${GIT_PATH}.${GIT_FORMAT}
+curl -L ${ARCHIVE_URL} -o ${ARCHIVE_DIR}.${ARCHIVE_FORMAT}
+if  [ "${ARCHIVE_FORMAT}" = "tar.gz" ]
+then
+	tar -xvzf ${ARCHIVE_DIR}.${ARCHIVE_FORMAT}
+elif [ "${ARCHIVE_FORMAT}" = "zip" ]
+then
+	gzip -d -xvzf ${ARCHIVE_DIR}.${ARCHIVE_FORMAT}
+else
+	echo "archive format not soupportet"
+	exit 1
+fi
+
 hugo \
-	--source ${GIT_PATH}/hugo \
-	--baseURL  https://olafradicke.github.io/hugo \
-	--destination ../docs
+	--source ${ARCHIVE_DIR}/${ARCHIVE_HUGO_DIR} \
+	--baseURL  ${HUGO_BASE_URL} \
+	--destination ${TARGET_DIR}
