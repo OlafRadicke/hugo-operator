@@ -20,7 +20,7 @@
           spec:
             initContainers:
             - name:               '{{ ansible_operator_meta.name }}-init-container'
-              image:              docker.io/olafradicke/hugo:0.0.3
+              image:              '{{ init_container_image }}'
               env:
               - name:             ARCHIVE_URL
                 value:            "{{ archive.url }}"
@@ -39,7 +39,7 @@
                 mountPath:        "{{ static_html_dir }}"
             containers:
             - name:               nginx
-              image:              "docker.io/nginxinc/nginx-unprivileged"
+              image:              "{{ service_container_image }}"
               ports:
                 - name:           web-ui
                   containerPort:  8080
