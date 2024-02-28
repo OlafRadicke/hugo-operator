@@ -11,6 +11,7 @@ rules:
       - ""
     resources:
       - secrets
+      - services
       - pods
       - pods/exec
       - pods/log

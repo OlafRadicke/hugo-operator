@@ -1,6 +1,6 @@
 ---
 
 # replicas_size: 1
-init_container_image: "docker.io/olafradicke/hugo:0.0.3"
+init_container_image: "docker.io/olafradicke/hugo:0.0.6"
 service_container_image: "docker.io/nginxinc/nginx-unprivileged"
 static_html_dir: "/usr/share/nginx/html"

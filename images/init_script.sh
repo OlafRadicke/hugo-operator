@@ -4,6 +4,8 @@ set -x
 set -u
 set -e
 
+export
+
 cd /hugo
 curl -L ${ARCHIVE_URL} -o ${ARCHIVE_DIR}.${ARCHIVE_FORMAT}
 if  [ "${ARCHIVE_FORMAT}" = "tar.gz" ]
@@ -18,6 +20,8 @@ else
 fi
 
 hugo \
+	--noChmod \
+	--noTimes \
 	--source ${ARCHIVE_DIR}/${ARCHIVE_HUGO_DIR} \
 	--baseURL  ${HUGO_BASE_URL} \
 	--destination ${TARGET_DIR}

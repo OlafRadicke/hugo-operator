@@ -15,15 +15,14 @@ PUSH OPERATOR (IMAGE)
 ---------------------
 
 ```bash
-VERSION="0.0.3"
-make podman-build podman-push VERSION="0.0.3"
+make podman-build podman-push VERSION="0.0.18"
 ```
 
 CREATE OPERATOR INSTALL YAML
 ----------------------------
 
 ```bash
-make dist-deploy VERSION="0.0.3"
+make dist-deploy VERSION="0.0.16"
 ```
 
 This creates the fiele `hugo-dist-deploy.yaml`
@@ -33,5 +32,5 @@ IMAGE PULL TEST
 
 ```
 podman rmi  -a
-podman pull docker.io/olafradicke/hugo-operator:0.0.1
+podman pull docker.io/olafradicke/hugo-operator:0.0.X
 ```
